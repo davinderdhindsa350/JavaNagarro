@@ -26,7 +26,7 @@ public class StatementController  extends AbstractRestController {
 	
 	@GetMapping("/getStatement")
 	public ResponseEntity<GlobalApiResponseEntity> getStatement(Authentication authentication, @RequestParam(value="accountId") int id,@RequestParam(value="fromDate", required=false) Optional<String> fromDate,@RequestParam(value="toDate", required=false) Optional<String> toDate,@RequestParam(value="fromAmount", required=false) Optional<String> fromAmount,@RequestParam(value="toAmount", required=false) Optional<String> toAmount) {
-		if(authentication.getAuthorities().stream().anyMatch(x-> x.getAuthority().equalsIgnoreCase("Admin")))
+		if(authentication.getAuthorities().stream().anyMatch(x-> x.getAuthority().equalsIgnoreCase("ROLE_ADMIN")))
 		{
 		if(fromDate.isPresent() && !toDate.isPresent())
 			return getBadRequestResponse(" To date is missing");

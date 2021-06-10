@@ -11,7 +11,10 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
@@ -19,26 +22,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	  protected void configure(AuthenticationManagerBuilder auth)  throws Exception {
-		auth.inMemoryAuthentication().withUser("admin").password("{noop}admin").roles("ADMIN");
-		auth.inMemoryAuthentication().withUser("user").password("{noop}user").roles("USER");
+		auth.inMemoryAuthentication().withUser("admin").password(passwordEncoder().encode("admin")).roles("ADMIN");
+		auth.inMemoryAuthentication().withUser("user").password(passwordEncoder().encode("user")).roles("USER");
 		  
 	  }
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception
 	{
 		http
-			.authorizeRequests()
-				.antMatchers("/resources/**", "/login", "/").permitAll()
-				.antMatchers("/api/**").hasAnyRole("ADMIN","USER")
-			.and().exceptionHandling().accessDeniedPage("/401");
-
-		http.sessionManagement().maximumSessions(1).expiredUrl("/login?expired=true");
+        .httpBasic().and()
+        .authorizeRequests()
+        .antMatchers("/").hasRole("ADMIN")
+        .anyRequest().authenticated()
+        .and()
+        .formLogin().and().logout().and()
+        .httpBasic();
+        ;
+		http.sessionManagement().maximumSessions(1).expiredUrl("/login").maxSessionsPreventsLogin(true);
+		http.sessionManagement().invalidSessionUrl("/invalidSession");
 	}
   
   
   
-  @Bean
-  public static NoOpPasswordEncoder passwordEncoder() {
-	  return (NoOpPasswordEncoder)NoOpPasswordEncoder.getInstance();
-  }
+	@Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }

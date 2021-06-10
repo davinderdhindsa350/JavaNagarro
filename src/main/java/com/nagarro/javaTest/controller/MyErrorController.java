@@ -12,6 +12,17 @@ public class MyErrorController implements ErrorController{
 	@RequestMapping("/error")
 	@ResponseBody
 	public String getErrorPath() {
-		return "<center><h1>Something went wrong</h1></center>";
+		return "<center><h1>Error in server</h1></center>";
+	}
+	
+	@RequestMapping("/invalidSession")
+	@ResponseBody
+	public String invalidSession() {
+		return "<center><h1>invalid Session</h1></center>";
+	}
+	@RequestMapping("/")
+	@ResponseBody
+	public String defaultPath() {
+		return "<center><h1>Nagarro JAVA Test</h1></center> ";
 	}
 }
