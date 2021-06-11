@@ -1,0 +1,91 @@
+
+This application have below Application Layers:
+Presentation layer : Rest COntroller is used for end points.
+Bussiness layer : Service classes present in service package are used to write all bussiness logic
+Presentance layer: DAO and DAO Implemention is worked as presntance layer where I am using JDBC Template
+Database layer : MS Access and Inmemory database is used at Database layer.
+
+Full application is divided into differnt packages.
+AOP is used for Logging we can control it form property file easily
+Spring actuator is used for performace and health check
+Spring security is used for Authontication and authontization
+Spring session is used for session mangement
+we can control session time out from property file
+We can controll most of the configuration from Property file
+Junit and Mockto is used for testing 
+AES powerfull Encryption is used
+Responses are globaly handled for all controllers 
+CORS is enable so that our endpoints easily connect with and service
+
+everything is packaged in differnt packages
+Scallablity and modifactions also easy because everything is distributted and controlled centeraly like if we want to change in loggs just change in one file automatically effect all areas same for exception handling or response or security configurations
+
+
+
+Important Links:
+
+LogIn to Application:http://localhost:8888/login
+LogIn to Application:http://localhost:8888/logout
+
+Get last 3 month statement
+http://localhost:8888/api/getStatement?accountId=3
+
+{"statusCode":200,"status":"SUCCESS","statusMessage":"SUCCESS","data":[{"id":3,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"03.09.2021","amount":"623.461804295262"},{"id":5,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"19.05.2021","amount":"125.51573044332"},{"id":7,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"15.09.2021","amount":"87.8901139771573"},{"id":23,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"16.07.2021","amount":"320.113318991709"},{"id":36,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"15.07.2021","amount":"971.65314918067"},{"id":66,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"25.03.2021","amount":"14.9269187221028"},{"id":105,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"23.03.2021","amount":"557.533882076657"},{"id":141,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"05.07.2021","amount":"38.6996920187093"}],"additionalAttributes":null}
+
+Get last 3 month statement for other account
+http://localhost:8888/api/getStatement?accountId=2
+{"statusCode":200,"status":"SUCCESS","statusMessage":"No Statements DataFound","data":[],"additionalAttributes":null}
+
+Get statement by Amount Range
+http://localhost:8888/api/getStatement?accountId=3&&fromAmount=12&&toAmount=623.461804295262
+
+{"statusCode":200,"status":"SUCCESS","statusMessage":"SUCCESS","data":[{"id":1,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"09.08.2020","amount":"535.197875027054"},{"id":4,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"03.02.2021","amount":"330.455004587924"},{"id":5,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"19.05.2021","amount":"125.51573044332"},{"id":7,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"15.09.2021","amount":"87.8901139771573"},{"id":23,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"16.07.2021","amount":"320.113318991709"},{"id":24,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"24.01.2021","amount":"564.982890505824"},{"id":25,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"29.11.2020","amount":"350.793682741483"},{"id":40,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"22.12.2016","amount":"369.407670060882"},{"id":66,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"25.03.2021","amount":"14.9269187221028"},{"id":84,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"17.01.2021","amount":"242.216450096382"},{"id":86,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"09.03.2012","amount":"165.97566682834"},{"id":91,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"18.06.2012","amount":"327.266323023121"},{"id":105,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"23.03.2021","amount":"557.533882076657"},{"id":107,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"19.12.2012","amount":"617.614872539574"},{"id":113,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"16.12.2012","amount":"602.336431872139"},{"id":133,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"25.06.2012","amount":"314.429495198656"},{"id":135,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"08.08.2019","amount":"518.420620441823"},{"id":141,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"05.07.2021","amount":"38.6996920187093"}],"additionalAttributes":null}
+
+Get statement by Date Range
+http://localhost:8888/api/getStatement?accountId=3&&fromDate=29.11.2020&&toDate=15.09.2021
+{"statusCode":200,"status":"SUCCESS","statusMessage":"SUCCESS","data":[{"id":3,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"03.09.2021","amount":"623.461804295262"},{"id":4,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"03.02.2021","amount":"330.455004587924"},{"id":5,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"19.05.2021","amount":"125.51573044332"},{"id":23,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"16.07.2021","amount":"320.113318991709"},{"id":24,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"24.01.2021","amount":"564.982890505824"},{"id":25,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"29.11.2020","amount":"350.793682741483"},{"id":36,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"15.07.2021","amount":"971.65314918067"},{"id":66,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"25.03.2021","amount":"14.9269187221028"},{"id":84,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"17.01.2021","amount":"242.216450096382"},{"id":105,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"23.03.2021","amount":"557.533882076657"},{"id":141,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"05.07.2021","amount":"38.6996920187093"}],"additionalAttributes":null}
+
+Get statement by Amount and Date Range
+http://localhost:8888/api/getStatement?accountId=3&&fromDate=29.11.2020&&toDate=15.09.2021&&fromAmount=12&&toAmount=623.461804295262
+
+{"statusCode":200,"status":"SUCCESS","statusMessage":"SUCCESS","data":[{"id":4,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"03.02.2021","amount":"330.455004587924"},{"id":5,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"19.05.2021","amount":"125.51573044332"},{"id":23,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"16.07.2021","amount":"320.113318991709"},{"id":24,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"24.01.2021","amount":"564.982890505824"},{"id":25,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"29.11.2020","amount":"350.793682741483"},{"id":66,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"25.03.2021","amount":"14.9269187221028"},{"id":84,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"17.01.2021","amount":"242.216450096382"},{"id":105,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"23.03.2021","amount":"557.533882076657"},{"id":141,"account_id":"3pvlqkcL2Gy3M0r+9cWbgQ==","datefield":"05.07.2021","amount":"38.6996920187093"}],"additionalAttributes":null}
+
+
+http://localhost:8888/actuator
+
+beans:http://localhost:8888/actuator/beans
+caches-cache:http://localhost:8888/actuator/caches/{cache}
+caches:http://localhost:8888/actuator/caches
+health-path:http://localhost:8888/actuator/health/{*path}
+health:http://localhost:8888/actuator/health
+info:http://localhost:8888/actuator/info
+conditions:http://localhost:8888/actuator/conditions
+shutdown:http://localhost:8888/actuator/shutdown
+configprops:http://localhost:8888/actuator/configprops
+configprops-prefix:http://localhost:8888/actuator/configprops/{prefix}
+env:http://localhost:8888/actuator/env
+env-toMatch:http://localhost:8888/actuator/env/{toMatch}
+loggers:http://localhost:8888/actuator/loggers
+loggers-name:http://localhost:8888/actuator/loggers/{name}
+heapdump:http://localhost:8888/actuator/heapdump
+threaddump:http://localhost:8888/actuator/threaddump
+metrics-requiredMetricName:http://localhost:8888/actuator/metrics/{requiredMetricName}
+metrics:http://localhost:8888/actuator/metrics
+scheduledtasks:http://localhost:8888/actuator/scheduledtasks
+mappings:http://localhost:8888/actuator/mappings
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

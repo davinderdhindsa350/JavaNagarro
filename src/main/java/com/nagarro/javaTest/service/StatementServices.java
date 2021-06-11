@@ -22,17 +22,17 @@ public class StatementServices {
 			
 			if(fromDate.isPresent())
 			{
-				String[] frmDate=fromDate.get().split(".");
+				String[] frmDate=fromDate.get().split("\\.");
 				if(frmDate.length!=3 || frmDate[0].length()!=2|| frmDate[1].length()!=2|| frmDate[2].length()!=4)
 					throw new Exception("From Date Format is incorrect please provide date in 'DD.MM.YYYY'");
-				sqlQuery.append(" AND cdate(MID(DATEFIELD,4,2)&'/'& MID(DATEFIELD,1,2)&'/'&MID(DATEFIELD,7,4)) >= cdate("+frmDate[1]+"/"+frmDate[0]+"/"+frmDate[2]+")");
+				sqlQuery.append(" AND cdate(MID(DATEFIELD,4,2)&'/'& MID(DATEFIELD,1,2)&'/'&MID(DATEFIELD,7,4)) >= cdate('"+frmDate[1]+"/"+frmDate[0]+"/"+frmDate[2]+"')");
 				}
 			if(toDate.isPresent())
 			{
-				String[] toDates=toDate.get().split(".");
+				String[] toDates=toDate.get().split("\\.");
 				if(toDates.length!=3 || toDates[0].length()!=2|| toDates[1].length()!=2|| toDates[2].length()!=4)
 					throw new Exception("To Date Format is incorrect please provide date in 'DD.MM.YYYY'");
-				sqlQuery.append("  AND  cdate(MID(DATEFIELD,4,2)&'/'& MID(DATEFIELD,1,2)&'/'&MID(DATEFIELD,7,4)) < cdate("+toDates[1]+"/"+toDates[0]+"/"+toDates[2]+")");
+				sqlQuery.append("  AND  cdate(MID(DATEFIELD,4,2)&'/'& MID(DATEFIELD,1,2)&'/'&MID(DATEFIELD,7,4)) < cdate('"+toDates[1]+"/"+toDates[0]+"/"+toDates[2]+"')");
 				}
 			if(fromAmount.isPresent())
 			{
