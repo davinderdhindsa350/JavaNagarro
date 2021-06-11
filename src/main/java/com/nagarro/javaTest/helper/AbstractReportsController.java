@@ -7,8 +7,8 @@ import org.springframework.http.ResponseEntity;
 public abstract class AbstractReportsController {
 
 	protected ResponseEntity<ByteArrayResource> sendOKReport(byte[] bytes) {
-		ByteArrayResource out = new ByteArrayResource(bytes);
-		return new ResponseEntity<ByteArrayResource>(out, HttpStatus.OK);
+		var out = new ByteArrayResource(bytes);
+		return new ResponseEntity<>(out, HttpStatus.OK);
 	}
 	
 	protected ResponseEntity<ByteArrayResource> sendOKReport(String responseData) {
@@ -16,8 +16,8 @@ public abstract class AbstractReportsController {
 	}
 	
 	protected ResponseEntity<ByteArrayResource> sendErrorReport(byte[] errorBytes) {
-		ByteArrayResource out = new ByteArrayResource(errorBytes);
-		return new ResponseEntity<ByteArrayResource>(out, HttpStatus.INTERNAL_SERVER_ERROR);
+		var out = new ByteArrayResource(errorBytes);
+		return new ResponseEntity<>(out, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 }

@@ -28,47 +28,40 @@ public class JavaTestAspect {
 	public ResponseEntity<GlobalApiResponseEntity> printLog(ProceedingJoinPoint joinPoint) throws Throwable {
 		Long entryTime = System.currentTimeMillis();
 		ResponseEntity<GlobalApiResponseEntity> response = null;
+		var line="********************************************************************************************";
+		logger.info(line);
+		var entryLogger = new StringBuilder(
+				"Entering into Controller { " + joinPoint.getStaticPart().getSignature() + " }");
+		RequestEntity<?> request = null;
+		Object[] args = joinPoint.getArgs();
 		try {
-			logger.info("********************************************************************************************");
-			StringBuilder entryLogger = new StringBuilder(
-					"Entering into Controller { " + joinPoint.getStaticPart().getSignature() + " }");
-			RequestEntity<?> request = null;
-			Object[] args = joinPoint.getArgs();
-			try {
-				request = (RequestEntity<Object>) args[0];
-				ObjectMapper mapper = new ObjectMapper();
-				String requestBody = mapper.writeValueAsString(request.getBody());
-				entryLogger.append(". Request body : " + requestBody);
-			} catch (ClassCastException e) {
-				entryLogger.append(". Request Parameters : ");
-				Arrays.stream(args).forEach(arg -> {
-					entryLogger.append(arg).append(", ");
-				});
-			} catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-			} catch (JsonProcessingException e) {
-				entryLogger.append(". Request body : " + request.getBody().toString());
-			} catch (Exception e) {
-				logger.error("System error" + e.getLocalizedMessage());
-			}
 
-			logger.info(entryLogger.toString());
+			request = (RequestEntity<Object>) args[0];
+			var mapper = new ObjectMapper();
+			var requestBody = mapper.writeValueAsString(request.getBody());
+			entryLogger.append(". Request body : " + requestBody);
 
-			response = (ResponseEntity<GlobalApiResponseEntity>) joinPoint
-					.proceed(args);
-			
-			logger.info("Exiting from Controller { " + joinPoint.getStaticPart().getSignature() + " }. Service took "
-					+ (System.currentTimeMillis() - entryTime) + "ms.");
-			logger.info("********************************************************************************************");
-		}catch(Exception e) {
-			logger.info("Exiting from Controller { " + joinPoint.getStaticPart().getSignature() + " }. with Exception. Total time took : " +
-					(System.currentTimeMillis() - entryTime) + "ms.");
-			logger.info("********************************************************************************************");
+			logger.info("Log this: {}",entryLogger);
+
+			response = (ResponseEntity<GlobalApiResponseEntity>) joinPoint.proceed(args);
+
+			logger.info("Exiting from Controller {} " , joinPoint.getStaticPart().getSignature());
+			logger.info(". Service took {} ms.",(System.currentTimeMillis() - entryTime) );
+			logger.info(line);
+		} catch (ClassCastException e) {
+			entryLogger.append(". Request Parameters : ");
+			Arrays.stream(args).forEach(arg -> entryLogger.append(arg).append(", "));
+		} catch (JsonProcessingException e) {
+			entryLogger.append(". Request body : " + request.getBody().toString());
+		} catch (Exception e) {
+			logger.info("Exiting from Controller {} " , joinPoint.getStaticPart().getSignature());
+			logger.info(" with Exception. Total time took : {} ms." , (System.currentTimeMillis() - entryTime) );
+			logger.info(line);
 			throw e;
 		}
 		return response;
 	}
-	
-	
+
 	@SuppressWarnings("all")
 	@Around("execution( *com.nagarro.javaTest.helper.ControllerExceptionHandler.*(..))")
 	public ResponseEntity<GlobalApiResponseEntity> getHome(ProceedingJoinPoint pjp) {

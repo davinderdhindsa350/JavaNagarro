@@ -12,8 +12,8 @@ import org.springframework.session.web.context.AbstractHttpSessionApplicationIni
 @EnableSpringHttpSession
 public class SessionConfig extends AbstractHttpSessionApplicationInitializer {
 	@Bean
-    public MapSessionRepository sessionRepository() {
-        return new MapSessionRepository(new ConcurrentHashMap<>());
-    }
-	
+	public MapSessionRepository sessionRepository() {
+		return new MapSessionRepository(new ConcurrentHashMap<>());
+	}
+
 }

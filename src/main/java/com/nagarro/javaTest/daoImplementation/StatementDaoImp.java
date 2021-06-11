@@ -1,7 +1,5 @@
 package com.nagarro.javaTest.daoImplementation;
 
-
-import java.text.ParseException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,25 +16,25 @@ public class StatementDaoImp implements StatementDao {
 
 	@Autowired
 	private JdbcTemplate jdbc;
+
 	@Override
 	public List<Statement> getStatement(String sql) {
-		// TODO Auto-generated method stub
+
 		return jdbc.query(sql, getMap());
 	}
 
-	private RowMapper<Statement> getMap(){
+	private RowMapper<Statement> getMap() {
 
-		RowMapper<Statement> map=( rs,  rowNum) -> {
-			Statement statement =new Statement();
+		return (rs, rowNum) -> {
+			var statement = new Statement();
 			statement.setId(rs.getInt("ID"));
-			statement.setAccount_id(EncryptionDecryption.encrypt(String.valueOf(rs.getInt("ACCOUNT_ID"))));
-			statement.setDatefield(rs.getString("DATEFIELD"));	
+			statement.setAccountId(EncryptionDecryption.encrypt(String.valueOf(rs.getInt("ACCOUNT_ID"))));
+			statement.setDatefield(rs.getString("DATEFIELD"));
 			statement.setAmount(rs.getString("AMOUNT"));
 			return statement;
 		};
+
 		
-		return map;
-		
-		
+
 	}
 }

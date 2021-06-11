@@ -23,10 +23,7 @@ public class ControllerExceptionHandler extends AbstractRestController {
 		return missingParamResponse(ex.getMessage());
 	}
 
-	@ExceptionHandler(Throwable.class)
-	public ResponseEntity<GlobalApiResponseEntity> handleThrowable(Throwable th) {
-		return getThrowableResponse(th);
-	}
+	
 	
 	@ExceptionHandler(BadRequestException.class)
 	public ResponseEntity<GlobalApiResponseEntity> handleBadRequest(BadRequestException e) {

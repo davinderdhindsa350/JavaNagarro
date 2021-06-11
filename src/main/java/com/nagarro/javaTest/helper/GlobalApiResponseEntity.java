@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class GlobalApiResponseEntity {
 
-	public static enum API_STATUSES {
+	public enum API_STATUSES {
 		SUCCESS, FAILURE;
 	}
 
@@ -13,28 +13,26 @@ public class GlobalApiResponseEntity {
 	private String statusMessage;
 	private Object data;
 	private Map<String, Object> additionalAttributes;
-	
-	public GlobalApiResponseEntity() {
-	}
+
 	
 	public static GlobalApiResponseEntity getInstance() {
 		return getSueccessInstance(null);
 	}
-	
+
 	/**
-	 * @param data	--	Successful Response
+	 * @param data -- Successful Response
 	 */
 	public static GlobalApiResponseEntity getSueccessInstance(Object data) {
-		GlobalApiResponseEntity response = new GlobalApiResponseEntity();
+		var response = new GlobalApiResponseEntity();
 		response.setStatusCode(200);
 		response.setStatus(API_STATUSES.SUCCESS.toString());
 		response.setStatusMessage(API_STATUSES.SUCCESS.toString());
 		response.setData(data);
 		return response;
 	}
-	
+
 	public static GlobalApiResponseEntity getFailureInstance(String statusMessage) {
-		GlobalApiResponseEntity response = new GlobalApiResponseEntity();
+		var response = new GlobalApiResponseEntity();
 		response.setStatusCode(500);
 		response.setStatus(API_STATUSES.FAILURE.toString());
 		response.setStatusMessage(statusMessage);

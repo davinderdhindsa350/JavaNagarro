@@ -13,13 +13,13 @@ import com.nagarro.javaTest.Utils;
 public abstract class AbstractRestController {
 	
 	private ResponseEntity<GlobalApiResponseEntity> addHeadersAndSendResponse(GlobalApiResponseEntity response, Map<String, String> customHeaders){
-		HttpHeaders headers = new HttpHeaders();
+		var headers = new HttpHeaders();
 		if( !Utils.isEmpty(customHeaders) ) {
 			for(Entry<String, String> keyValue : customHeaders.entrySet()) {
 				headers.add(keyValue.getKey(), keyValue.getValue());
 			}
 		}
-		return new ResponseEntity<GlobalApiResponseEntity>(response, headers, HttpStatus.OK);
+		return new ResponseEntity<>(response, headers, HttpStatus.OK);
 	}
 
 	protected ResponseEntity<GlobalApiResponseEntity> getOKResponse(String message){
@@ -36,30 +36,27 @@ public abstract class AbstractRestController {
 
 	protected ResponseEntity<GlobalApiResponseEntity> getOKResponse(Object data, String message,
 			Map<String, Object> additionalAttributes) {
-		GlobalApiResponseEntity response = GlobalApiResponseEntity.getSueccessInstance(data);
+		var response = GlobalApiResponseEntity.getSueccessInstance(data);
 		response.setStatusMessage(message);
 		response.setAdditionalAttributes(additionalAttributes);
 		return addHeadersAndSendResponse(response, null);
 	}
 
 	protected ResponseEntity<GlobalApiResponseEntity> missingParamResponse(String param) {
-		GlobalApiResponseEntity response = GlobalApiResponseEntity.getFailureInstance("Missing Param : " + param);
+		var response = GlobalApiResponseEntity.getFailureInstance("Missing Param : " + param);
 		response.setStatusCode(HttpStatus.BAD_REQUEST.value());
 		return addHeadersAndSendResponse(response, null);
 	}
 	
 	protected ResponseEntity<GlobalApiResponseEntity> getExceptionResponse(Exception ex){
-		GlobalApiResponseEntity response = GlobalApiResponseEntity.getFailureInstance(ex.getClass().getName() + "\n" + ex.getMessage());
+		var response = GlobalApiResponseEntity.getFailureInstance(ex.getClass().getName() + "\n" + ex.getMessage());
 		return addHeadersAndSendResponse(response, null);
 	}
 	
-	protected ResponseEntity<GlobalApiResponseEntity> getThrowableResponse(Throwable th) {
-		GlobalApiResponseEntity response = GlobalApiResponseEntity.getFailureInstance("Failed : Please Contact Production Support");
-		return addHeadersAndSendResponse(response, null);
-	}
+
 	
 	protected ResponseEntity<GlobalApiResponseEntity> getBadRequestResponse(String messageToUser) {
-		GlobalApiResponseEntity response = GlobalApiResponseEntity.getFailureInstance(messageToUser);
+		var response = GlobalApiResponseEntity.getFailureInstance(messageToUser);
 		response.setStatusCode(HttpStatus.BAD_REQUEST.value());
 		return addHeadersAndSendResponse(response, null);
 	}
